@@ -27,7 +27,6 @@ def show_batch_bias(batch_contents, num_files, batch_size, sampling_rate=0.05):
         color = cm.jet(1.0 * file_idx / num_files)
         ax.scatter(x, y, c=color, label="file{0:02d}".format(file_idx))
 
-    ax.set_title('second scatter plot')
     ax.set_xlabel('batch')
     ax.set_ylabel('record')
 

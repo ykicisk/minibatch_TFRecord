@@ -1,8 +1,7 @@
 # minibatch_TFRecord
 
-* TFRecordファイルを入力とした`tf.train.shuffle_batch`を行うスクリプトです。
-* パラメータを変えたときの`tf.train.shuffle_batch`の偏りを調べることもできます。
-	* ここで言う偏り＝同じミニバッチ内でどれ位同じTFRecordファイルに含まれるファイルが有るか
+* TFRecordファイルを入力とした`tf.train.shuffle_batch`の偏りを調べるスクリプトです。
+* ここで言う偏り＝同じミニバッチ内でどれ位同じTFRecordファイルに含まれるファイルが有るか
 
 ## dependencies
 
@@ -17,23 +16,26 @@
 
 ```sh
 $ mkdir data
-$ ./write_tfrecords.py data
+$ ./create_tfrecords.py data
 ```
 
 ### テスト用TFRecordを使ったshuffle_batch
 
 ```sh
-$ ./mini_batch.py data
+$ ./visualize_mini_batch.py data tensorboard_log_dir
 ```
 
 ## result
 
-結果グラフはミニバッチを構成するデータの元ファイルの分布が、ミニバッチを進めていくとどう変化するかを表す。
-縦軸はTFRecordファイル、横軸はミニバッチに含まれるデータ数(累積)、batch[0-9]は全ミニバッチを時間順に均等に分けたもの。
 
-### (例)デフォルトパラメータの場合
+横軸がバッチのインデックス、縦軸がレコードのインデックス、色がファイルを表します。
+散布図の一点が１データを表し、何番目のバッチでどのファイルの何番目のデータが出てきたかを示しています。
 
-下の結果であれば、shuffle_batch始めの1/10のミニバッチには、file5, file6由来のデータしか含まれておらず、
-file5に入っているデータは半分以上がshuffle_batch始めの1/10のミニバッチに入っていることがわかる。
+※全データ点の5%のみ表示します
+
+### 例
+
+以下の結果では、バッチ前半で各ファイルの前半のデータが出現し、
+バッチ後半で各ファイルの後半のデータが出現していることがわかります。
 
 ![結果](images/result.png)
