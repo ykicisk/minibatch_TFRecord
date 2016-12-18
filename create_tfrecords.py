@@ -18,7 +18,7 @@ def _float_list_feature(value):
     return tf.train.Feature(float_list=tf.train.FloatList(value=value))
 
 
-def write_tfrecords(dst_path, num_files, num_records):
+def create_tfrecords(dst_path, num_files, num_records):
     for fidx in range(num_files):
         file_path = os.path.join(dst_path, "file{0:02d}.tfrecord".format(fidx))
         with tf.python_io.TFRecordWriter(file_path) as writer:
@@ -50,10 +50,10 @@ def main():
     parser.add_argument("dst", help="output root direcotory path")
     parser.add_argument("--num_files", type=int, default=10,
                         help="number of TFRecord files")
-    parser.add_argument("--num_records", type=int, default=1000,
+    parser.add_argument("--num_records", type=int, default=5000,
                         help="number of records in a TFRecords")
     args = parser.parse_args()
-    write_tfrecords(args.dst, args.num_files, args.num_records)
+    create_tfrecords(args.dst, args.num_files, args.num_records)
 
 
 if __name__ == "__main__":
